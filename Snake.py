@@ -38,12 +38,12 @@ snake_body = []
 velocityX = 0
 velocityY = 0
 score = 0
+high_score = 0
 game_over = False
 
 #Set direction of snake - note the and statements stop you from doubling back on yourself
 def changeDirection(event):
     global velocityX, velocityY, game_over
-    print(event.keysym)
     if (game_over):
         if (event.keysym == "r"):
             restart()
@@ -75,7 +75,7 @@ def restart():
     game_over = False
 
 def move():
-    global snake, score, food, snake_body, game_over
+    global snake, score, high_score, food, snake_body, game_over
     if (game_over):
         return
     
@@ -84,6 +84,7 @@ def move():
         game_over = True
         return
     
+    #does the snake eat itself?
     for tile in snake_body:
         if (snake.x == tile.x and snake.y == tile.y):
             game_over = True
@@ -95,6 +96,9 @@ def move():
         food.x = random.randint(0, COLUMNS - 1) * TILE_SIZE
         food.y = random.randint(0, ROWS - 1) * TILE_SIZE
         score += 1
+        #has a new high score been set?
+        if (score > high_score):
+            high_score = score
     
     #update body
     for i in range(len(snake_body) - 1, -1, -1):
@@ -132,7 +136,7 @@ def draw():
         canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over! \nScore: {score}. \nR to Restart", fill="white", font=("Arial", 24))
         return
     else:
-        canvas.create_text(50, 10, text=f"Score: {score}", fill="white", font=("Arial", 16))
+        canvas.create_text(100, 10, text=f"Score: {score} High Score {high_score}", fill="white", font=("Arial", 16))
 
     #running at 10fps
     window.after(100, draw)
