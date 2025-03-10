@@ -1,5 +1,11 @@
 import tkinter
 import random
+import pygame
+
+
+pygame.mixer.init()
+eat_sound = pygame.mixer.Sound('beep.mp3')
+death_sound = pygame.mixer.Sound('beep.mp3')
 
 ROWS = 25
 COLUMNS = 25
@@ -81,17 +87,20 @@ def move():
     
     #does the snake leave the screen?
     if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        death_sound.play()
         game_over = True
         return
     
     #does the snake eat itself?
     for tile in snake_body:
         if (snake.x == tile.x and snake.y == tile.y):
+            death_sound.play()
             game_over = True
             return
 
     #does the snake hit food?
     if (snake.x == food.x and snake.y == food.y):
+        eat_sound.play()
         snake_body.append(Tile(food.x, food.y))
         food.x = random.randint(0, COLUMNS - 1) * TILE_SIZE
         food.y = random.randint(0, ROWS - 1) * TILE_SIZE
