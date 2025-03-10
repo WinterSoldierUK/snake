@@ -43,9 +43,14 @@ game_over = False
 #Set direction of snake - note the and statements stop you from doubling back on yourself
 def changeDirection(event):
     global velocityX, velocityY, game_over
+    print(event.keysym)
     if (game_over):
-        return
-    
+        if (event.keysym == "r"):
+            restart()
+            draw()
+        else:
+            return     
+        
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
         velocityY = -1
@@ -58,6 +63,16 @@ def changeDirection(event):
     elif (event.keysym == "Right" and velocityX != -1):
         velocityX = 1
         velocityY = 0
+
+def restart():
+    global snake, food, snake_body, score, game_over, velocityX, velocityY
+    snake = Tile(5*TILE_SIZE, 5*TILE_SIZE)
+    food = Tile(random.randint(0, COLUMNS - 1)*TILE_SIZE, random.randint(0, ROWS - 1)*TILE_SIZE)
+    snake_body = []
+    velocityX = 0
+    velocityY = 0
+    score = 0
+    game_over = False
 
 def move():
     global snake, score, food, snake_body, game_over
@@ -114,7 +129,7 @@ def draw():
     
     #redraw score
     if (game_over):
-        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over! Score: {score}", fill="white", font=("Arial", 24))
+        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over! \nScore: {score}. \nR to Restart", fill="white", font=("Arial", 24))
         return
     else:
         canvas.create_text(50, 10, text=f"Score: {score}", fill="white", font=("Arial", 16))
