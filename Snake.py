@@ -38,10 +38,14 @@ snake_body = []
 velocityX = 0
 velocityY = 0
 score = 0
+game_over = False
 
 #Set direction of snake - note the and statements stop you from doubling back on yourself
 def changeDirection(event):
-    global velocityX, velocityY
+    global velocityX, velocityY, game_over
+    if (game_over):
+        return
+    
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
         velocityY = -1
@@ -56,7 +60,19 @@ def changeDirection(event):
         velocityY = 0
 
 def move():
-    global snake, score
+    global snake, score, food, snake_body, game_over
+    if (game_over):
+        return
+    
+    #does the snake leave the screen?
+    if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        game_over = True
+        return
+    
+    for tile in snake_body:
+        if (snake.x == tile.x and snake.y == tile.y):
+            game_over = True
+            return
 
     #does the snake hit food?
     if (snake.x == food.x and snake.y == food.y):
@@ -64,13 +80,24 @@ def move():
         food.x = random.randint(0, COLUMNS - 1) * TILE_SIZE
         food.y = random.randint(0, ROWS - 1) * TILE_SIZE
         score += 1
+    
+    #update body
+    for i in range(len(snake_body) - 1, -1, -1):
+        tile = snake_body[i]
+        if (i == 0):
+            tile.x = snake.x
+            tile.y = snake.y
+        else:
+            tile.x = snake_body[i - 1].x
+            tile.y = snake_body[i - 1].y
+
 
     #set snakes new position based on velocity
     snake.x += velocityX * TILE_SIZE
     snake.y += velocityY * TILE_SIZE
 
 def draw():
-    global snake
+    global snake, game_over, score
     #update the snake position
     move()
 
@@ -86,7 +113,11 @@ def draw():
         canvas.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill="lime green")
     
     #redraw score
-    canvas.create_text(50, 10, text=f"Score: {score}", fill="white", font=("Arial", 16))
+    if (game_over):
+        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over! Score: {score}", fill="white", font=("Arial", 24))
+        return
+    else:
+        canvas.create_text(50, 10, text=f"Score: {score}", fill="white", font=("Arial", 16))
 
     #running at 10fps
     window.after(100, draw)
