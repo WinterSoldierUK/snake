@@ -13,7 +13,7 @@ Proper sound effects
 Background music
 Volume keys
 
-Quit button
+[DONE] Quit button
 
 Menu screen
 Instructions

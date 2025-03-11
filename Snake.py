@@ -1,6 +1,7 @@
 import tkinter
 import random
 import pygame
+import sys
 
 
 pygame.mixer.init()
@@ -54,9 +55,12 @@ def changeDirection(event):
         if (event.keysym == "r"):
             restart()
             draw()
+        elif (event.keysym == "Escape"):
+            sys.exit()
         else:
             return     
         
+    
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
         velocityY = -1
@@ -69,6 +73,8 @@ def changeDirection(event):
     elif (event.keysym == "Right" and velocityX != -1):
         velocityX = 1
         velocityY = 0
+    elif (event.keysym == "Escape"):
+        sys.exit()
 
 def restart():
     global snake, food, snake_body, score, game_over, velocityX, velocityY
