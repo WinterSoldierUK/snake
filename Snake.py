@@ -5,8 +5,9 @@ import sys
 
 
 pygame.mixer.init()
-eat_sound = pygame.mixer.Sound('beep.mp3')
-death_sound = pygame.mixer.Sound('beep.mp3')
+eat_sound = pygame.mixer.Sound('eating.mp3')
+death_sound = pygame.mixer.Sound('aww.mp3')
+wall_death_sound = pygame.mixer.Sound('explosion.mp3')
 
 ROWS = 25
 COLUMNS = 25
@@ -93,7 +94,7 @@ def move():
     
     #does the snake leave the screen?
     if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
-        death_sound.play()
+        wall_death_sound.play()
         game_over = True
         return
     
