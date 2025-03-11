@@ -9,7 +9,7 @@ Highscore name
 Highscore table
 Highscore persistance
 
-Proper sound effects
+[DONE] Proper sound effects
 Background music
 Volume keys
 

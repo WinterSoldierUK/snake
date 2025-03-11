@@ -46,7 +46,8 @@ snake_body = []
 velocityX = 0
 velocityY = 0
 score = 0
-high_score = 0
+high_score = 5
+hero_name = "Matt"
 game_over = False
 
 #Set direction of snake - note the and statements stop you from doubling back on yourself
@@ -149,7 +150,14 @@ def draw():
     
     #redraw score
     if (game_over):
-        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over! \nScore: {score}. \nR to Restart", fill="white", font=("Arial", 24))
+        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over!", fill="white", font=("Arial", 24))
+        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 30, text=f"Score: {score}", fill="white", font=("Arial", 24))
+        canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 60, text=f"R to Restart", fill="white", font=("Arial", 24))
+
+        if (score < high_score):
+            canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100, text=f"You Failed To Beat {hero_name}!", fill="white", font=("Arial", 24))
+        else:
+            canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100, text=f" New High Score: {high_score}!", fill="white", font=("Arial", 24))
         return
     else:
         canvas.create_text(100, 10, text=f"Score: {score} High Score {high_score}", fill="white", font=("Arial", 16))
