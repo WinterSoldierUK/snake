@@ -39,16 +39,12 @@ window_x = int((screen_width / 2) - (window_width / 2))
 window_y = int((screen_height / 2) - (window_height / 2))
 window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
-#initialize game
-snake = Tile(5*TILE_SIZE, 5*TILE_SIZE)
-food = Tile(10*TILE_SIZE, 10*TILE_SIZE)
-snake_body = []
-velocityX = 0
-velocityY = 0
-score = 0
-high_score = 5
-hero_name = "Matt"
-game_over = False
+def randomRow():
+    return random.randint(0, ROWS - 1)*TILE_SIZE
+
+def randomColumn():
+    return random.randint(0, COLUMNS - 1)*TILE_SIZE
+
 
 #Set direction of snake - note the and statements stop you from doubling back on yourself
 def changeDirection(event):
@@ -61,7 +57,6 @@ def changeDirection(event):
             sys.exit()
         else:
             return     
-        
     
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
@@ -81,7 +76,7 @@ def changeDirection(event):
 def restart():
     global snake, food, snake_body, score, game_over, velocityX, velocityY
     snake = Tile(5*TILE_SIZE, 5*TILE_SIZE)
-    food = Tile(random.randint(0, COLUMNS - 1)*TILE_SIZE, random.randint(0, ROWS - 1)*TILE_SIZE)
+    food = Tile(randomColumn(), randomRow())
     snake_body = []
     velocityX = 0
     velocityY = 0
@@ -164,6 +159,18 @@ def draw():
 
     #running at 10fps
     window.after(100, draw)
+
+
+#initialize game
+snake = Tile(5*TILE_SIZE, 5*TILE_SIZE)
+food = Tile(randomColumn(), randomRow())
+snake_body = []
+velocityX = 0
+velocityY = 0
+score = 0
+high_score = 5
+game_over = False
+hero_name = "Matt"
 
 #update the screen
 draw()

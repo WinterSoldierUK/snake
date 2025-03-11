@@ -5,7 +5,7 @@ Snake?.....Snaaaaaaaaaaake!
 Arrows to Move - you know the rest
 
 TODO List
-Highscore name
+Highscore name entry
 Highscore table
 Highscore persistance
 
