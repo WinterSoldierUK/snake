@@ -164,10 +164,15 @@ def draw():
 
 def load_score():
         global high_score, hero_name
-        with open("hero.json") as f:
-            hero = json.load(f)
-        high_score = hero["high_score"]
-        hero_name = hero["hero_name"]
+
+        try:
+            with open("hero.json") as f:
+                hero = json.load(f)
+        except FileNotFoundError:
+            print('High Score File Missing - Using Defaults')
+        else:
+            high_score = hero["high_score"]
+            hero_name = hero["hero_name"]
 
 def save_score():
     global high_score, hero_name
