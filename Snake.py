@@ -2,7 +2,7 @@ import tkinter
 import random
 import pygame
 import sys
-
+import json
 
 pygame.mixer.init()
 eat_sound = pygame.mixer.Sound('eating.mp3')
@@ -153,6 +153,8 @@ def draw():
             canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100, text=f"You Failed To Beat {hero_name}!", fill="white", font=("Arial", 24))
         else:
             canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100, text=f" New High Score: {high_score}!", fill="white", font=("Arial", 24))
+            save_score()
+
         return
     else:
         canvas.create_text(100, 10, text=f"Score: {score} High Score {high_score}", fill="white", font=("Arial", 16))
@@ -160,6 +162,18 @@ def draw():
     #running at 10fps
     window.after(100, draw)
 
+def load_score():
+        global high_score, hero_name
+        with open("hero.json") as f:
+            hero = json.load(f)
+        high_score = hero["high_score"]
+        hero_name = hero["hero_name"]
+
+def save_score():
+    global high_score, hero_name
+    hero = { "high_score": high_score, "hero_name": hero_name } 
+    with open("hero.json", "w") as f:
+        json.dump(hero, f)
 
 #initialize game
 snake = Tile(5*TILE_SIZE, 5*TILE_SIZE)
@@ -168,9 +182,11 @@ snake_body = []
 velocityX = 0
 velocityY = 0
 score = 0
-high_score = 5
 game_over = False
+#these are defaults in case the file isn't found
+high_score = 5
 hero_name = "Matt"
+load_score()
 
 #update the screen
 draw()
