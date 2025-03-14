@@ -136,7 +136,7 @@ def draw():
     canvas.delete("all")
 
     #redraw the snake head and food
-    canvas.create_rectangle(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill="red")
+    canvas.create_oval(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill="blue")
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill="lime green")
 
     #redraw snake body
@@ -195,7 +195,6 @@ load_score()
 
 #update the screen
 draw()
-
 #check for key strokes
 window.bind("<KeyRelease>", changeDirection)
 window.mainloop()

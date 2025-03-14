@@ -7,7 +7,7 @@ Arrows to Move - you know the rest
 TODO List
 Highscore name entry
 Highscore table
-Highscore persistance
+[DONE] Highscore persistance
 
 [DONE] Proper sound effects
 Background music
