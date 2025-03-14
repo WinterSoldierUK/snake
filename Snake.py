@@ -71,6 +71,8 @@ def changeDirection(event):
         velocityX = 1
         velocityY = 0
     elif (event.keysym == "Escape"):
+        pygame.mixer.music.stop()
+        pygame.mixer.music.unload()
         sys.exit()
 
 def restart():
@@ -82,6 +84,7 @@ def restart():
     velocityY = 0
     score = 0
     game_over = False
+    pygame.mixer.music.play(loops=-1, fade_ms=2000)
 
 def move():
     global snake, score, high_score, food, snake_body, game_over
@@ -148,6 +151,7 @@ def draw():
         canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, text=f"Game Over!", fill="white", font=("Arial", 24))
         canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 30, text=f"Score: {score}", fill="white", font=("Arial", 24))
         canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 60, text=f"R to Restart", fill="white", font=("Arial", 24))
+        pygame.mixer.music.stop()
 
         if (score < high_score):
             canvas.create_text(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100, text=f"You Failed To Beat {hero_name}!", fill="white", font=("Arial", 24))
@@ -192,6 +196,9 @@ game_over = False
 high_score = 5
 hero_name = "Matt"
 load_score()
+
+pygame.mixer.music.load('chiptune-medium-boss.mp3')
+pygame.mixer.music.play(loops=-1, fade_ms=2000)
 
 #update the screen
 draw()
