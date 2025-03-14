@@ -56,7 +56,12 @@ def changeDirection(event):
         elif (event.keysym == "Escape"):
             sys.exit()
         else:
-            return     
+            return    
+    #volume
+    if (event.keysym == "equal"):
+        pygame.mixer.music.set_volume(1.0)
+    elif (event.keysym == "minus"):
+        pygame.mixer.music.set_volume(0.25) 
     
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
@@ -198,6 +203,7 @@ hero_name = "Matt"
 load_score()
 
 pygame.mixer.music.load('chiptune-medium-boss.mp3')
+pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(loops=-1, fade_ms=2000)
 
 #update the screen
