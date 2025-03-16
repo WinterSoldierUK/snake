@@ -8,6 +8,7 @@ pygame.mixer.init()
 eat_sound = pygame.mixer.Sound('eating.mp3')
 death_sound = pygame.mixer.Sound('aww.mp3')
 wall_death_sound = pygame.mixer.Sound('explosion.mp3')
+beep_sound = pygame.mixer.Sound('short-beep-tone.mp3')
 
 ROWS = 25
 COLUMNS = 25
@@ -59,10 +60,11 @@ def changeDirection(event):
             return    
     #volume
     if (event.keysym == "equal"):
-        pygame.mixer.music.set_volume(1.0)
+        volume_control(event)
     elif (event.keysym == "minus"):
-        pygame.mixer.music.set_volume(0.25) 
+        volume_control(event)
     
+    #movement controls
     if (event.keysym == "Up" and velocityY != 1):
         velocityX = 0
         velocityY = -1
@@ -90,6 +92,26 @@ def restart():
     score = 0
     game_over = False
     pygame.mixer.music.play(loops=-1, fade_ms=2000)
+
+def volume_control(event):
+    if (event.keysym == "equal"):
+        current_volume = pygame.mixer.music.get_volume()
+        if (current_volume == 1):
+            beep_sound.play()
+        else:
+            new_volume = current_volume + 0.1
+            pygame.mixer.music.set_volume(new_volume)
+    elif (event.keysym == "minus"):
+        current_volume = pygame.mixer.music.get_volume()
+        print(current_volume)
+        if (current_volume < 0.1):
+            #this is here for rounding exactness
+            beep_sound.play()
+            new_volume = 0
+            pygame.mixer.music.set_volume(new_volume)
+        else:
+            new_volume = current_volume - 0.1
+            pygame.mixer.music.set_volume(new_volume)
 
 def move():
     global snake, score, high_score, food, snake_body, game_over

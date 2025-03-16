@@ -10,8 +10,8 @@ Highscore table
 [DONE] Highscore persistance
 
 [DONE] Proper sound effects
-Background music
-Volume keys
+[DONE] Background music
+[DONE] Volume keys
 
 [DONE] Quit button
 
