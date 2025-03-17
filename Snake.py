@@ -167,7 +167,7 @@ def draw():
 
     #redraw the snake head and food
     canvas.create_oval(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill="blue")
-    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill="lime green")
+    canvas.create_oval(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill="lime green")
 
     #redraw snake body
     for tile in snake_body:
